@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Projectile Simulator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <link rel="stylesheet" href="/static/projectile/projectile.css">
+</head>
+<body>
+    <div class="navbar">
+        <a href="/" class="back-link">← Back</a>
+        <h1>Projectile Simulation</h1>
+    </div>
+
+    <div class="controls">
+        <button onclick="resetSimulation()">Menu</button>
+    </div>
+
+    <div id="canvas-holder" class="canvas-holder"></div>
+    <script src="/static/projectile/projectile.js"></script>
+
+    <section class="physics-section">
+        <h2>🎯 Physics Behind the Projectile Simulator with Wind and Gravity</h2>
+
+        <p>This simulation demonstrates projectile motion influenced by gravity and optional wind, with support for bouncing and 2D elastic collisions between projectiles. It follows Newtonian physics with simplified air resistance (wind).</p>
+
+        <h3>1. Projectile Motion Equations</h3>
+        <p>The simulation calculates the motion of each projectile using basic kinematic equations under constant acceleration:</p>
+
+        <pre><code>
+        vx = vx + wind * 0.01;
+        vy = vy + gravity;
+        x = x + vx;
+        y = y + vy;
+        </code></pre>
+
+        <p><strong>Code Reference:</strong></p>
+        <pre><code>
+        this.vel.y += g;
+        this.vel.x += wind * 0.01;
+        this.pos.add(this.vel);
+        </code></pre>
+
+        <h3>2. Gravity Constants by Planet</h3>
+        <p>Gravity differs by celestial body, modifying the vertical acceleration:</p>
+        <pre><code>
+        Earth: 0.5
+        Moon:  0.08
+        Mars:  0.2
+        </code></pre>
+
+        <p><strong>Code:</strong></p>
+        <pre><code>
+        let g = gravityValues[menuInputs.gravity] || 0.5;
+        </code></pre>
+
+        <h3>3. Launch Force (Slingshot)</h3>
+        <p>The initial velocity is calculated from the drag distance and direction:</p>
+        <pre><code>
+        let force = p5.Vector.sub(dragStart, createVector(mouseX, mouseY)).mult(0.1);
+        </code></pre>
+
+        <p>This maps to classic velocity from force:</p>
+        <pre><code>
+        v0 = F / m → we simplify as velocity = drag distance × factor
+        </code></pre>
+
+        <h3>4. Wind as Horizontal Acceleration</h3>
+        <p>Wind is applied as a constant acceleration in the horizontal (x) direction:</p>
+        <pre><code>
+        vx += wind * 0.01;
+        </code></pre>
+
+        <p>This is a simplified model where drag is uniform regardless of velocity.</p>
+
+        <h3>5. Bouncing Mechanics</h3>
+        <p>Projectiles bounce off walls and the floor using inverted velocity and damping:</p>
+        <pre><code>
+        if (this.pos.y + this.r > height - 20) {
+        this.pos.y = height - 20 - this.r;
+        this.vel.y *= -0.7;
+        }
+        </code></pre>
+
+        <p>The damping factor <code>-0.7</code> reduces energy to simulate imperfect bounces.</p>
+
+        <h3>6. 2D Elastic Collision Between Projectiles</h3>
+        <p>When two projectiles overlap, we apply 2D elastic collision resolution:</p>
+
+        <ul>
+            <li>Calculate distance and resolve overlap</li>
+            <li>Use normal vector to compute relative velocity</li>
+            <li>Apply impulse if they’re moving toward each other</li>
+        </ul>
+
+        <pre><code>
+        let normal = p5.Vector.sub(b.pos, a.pos).normalize();
+        let relVel = p5.Vector.sub(b.vel, a.vel);
+        let speed = relVel.dot(normal);
+        if (speed < 0) return;
+        let impulse = normal.copy().mult(speed * 0.5);
+        a.vel.add(impulse);
+        b.vel.sub(impulse);
+        </code></pre>
+
+        <h3>7. Trajectory Preview (Without Simulation)</h3>
+        <p>We draw a visual approximation of the path before launch using the same update logic in a loop:</p>
+        <pre><code>
+        for (let t = 0; t < 100; t++) {
+        tempX += vx;
+        tempY += vy;
+        vy += g;
+        vx += wind * 0.01;
+        }
+        </code></pre>
+
+        <h3>🧠 Summary of Physics Concepts</h3>
+        <ul>
+            <li>Newton’s Laws of Motion</li>
+            <li>Uniform acceleration (gravity, wind)</li>
+            <li>Elastic collision handling via impulse</li>
+            <li>Basic vector math (forces, velocities)</li>
+            <li>Kinematic motion under constant force</li>
+        </ul>
+    </section>
+
+</body>
+</html>

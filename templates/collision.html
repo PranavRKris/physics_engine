@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Collision Simulator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <link rel="stylesheet" href="/static/collision/collision.css">
+</head>
+<body>
+    <div class="navbar">
+        <a href="/" class="back-link">← Back</a>
+        <h1>Collision Simulation</h1>
+    </div>
+
+    <div class="controls">
+        <button onclick="changeMode('1d')">1D Collision</button>
+        <button onclick="changeMode('2d')">2D Collision</button>
+    </div>
+
+    <div id="canvas-holder" class="canvas-holder"></div>
+    <script src="/static/collision/collision.js"></script>
+
+    <section class="physics-section">
+        <h2>🔬 Physics Behind the 1D and 2D Elastic Collision Simulator</h2>
+
+        <p>This simulation models <strong>perfectly elastic collisions</strong> between moving balls using Newtonian physics. It supports both 1D and 2D modes with adjustable mass and velocity values. Here's the breakdown:</p>
+
+        <h3>1. 1D Elastic Collision Equations</h3>
+        <p>For two masses \( m_1 \) and \( m_2 \) with velocities \( v_1 \) and \( v_2 \), the final velocities after a 1D collision are:</p>
+        <pre><code>
+        v1' = ((m1 - m2) / (m1 + m2)) * v1 + (2 * m2 / (m1 + m2)) * v2  
+        v2' = ((m2 - m1) / (m1 + m2)) * v2 + (2 * m1 / (m1 + m2)) * v1
+        </code></pre>
+        <p><strong>Code:</strong></p>
+        <pre><code>
+        let v1 = ((a.m - b.m) / (a.m + b.m)) * a.vx + ((2 * b.m) / (a.m + b.m)) * b.vx;
+        let v2 = ((b.m - a.m) / (a.m + b.m)) * b.vx + ((2 * a.m) / (a.m + b.m)) * a.vx;
+        </code></pre>
+
+        <h3>2. Collision Detection (1D)</h3>
+        <p>Collision is triggered when the distance between the ball centers is less than the sum of their radii:</p>
+        <pre><code>if (abs(dx) &lt; minDist && dx &gt; 0)</code></pre>
+
+        <h3>3. 2D Elastic Collisions</h3>
+        <p>We use vector math and conservation of momentum in 2D:</p>
+        <ul>
+            <li>Check overlap using Euclidean distance</li>
+            <li>Resolve using dot product along normal direction</li>
+        </ul>
+
+        <pre><code>
+        let dot = dvx * nx + dvy * ny;
+        let impulse = (2 * dot) / (a.m + b.m);
+        </code></pre>
+
+        <p>Then update velocity vectors and resolve overlap:</p>
+        <pre><code>
+        a.vx -= impulse * b.m * nx;
+        b.vx += impulse * a.m * nx;
+        </code></pre>
+
+        <h3>4. Overlap Correction</h3>
+        <p>To avoid sticking, we shift each ball away proportionally:</p>
+        <pre><code>
+        a.x -= (overlap / 2) * nx;
+        b.x += (overlap / 2) * nx;
+        </code></pre>
+
+        <h3>5. Ball Movement</h3>
+        <p>Balls move based on velocity and bounce off walls:</p>
+        <pre><code>
+        this.x += this.vx;
+        if (this.x - this.r &lt; 0 || this.x + this.r &gt; width) this.vx *= -1;
+        </code></pre>
+
+        <h3>6. Input Parameters</h3>
+        <ul>
+            <li><strong>Mass 1 / Mass 2</strong> → Affects momentum and bounce</li>
+            <li><strong>Speed</strong> → Sets initial velocity of Ball 2</li>
+            <li><strong>Ball Count (2D)</strong> → Number of particles in simulation</li>
+        </ul>
+
+        <h3>🧠 Summary of Physics Concepts</h3>
+        <ul>
+            <li>Conservation of Momentum</li>
+            <li>Conservation of Kinetic Energy (elastic collisions)</li>
+            <li>1D vs 2D Collision Resolution</li>
+            <li>Collision Impulse Calculation</li>
+            <li>Wall bounce and overlap correction</li>
+        </ul>
+    </section>
+
+</body>
+</html>

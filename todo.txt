@@ -1,0 +1,65 @@
+🔁 1. Elastic & Inelastic Collisions
+Bouncing balls in 1D or 2D
+
+Show conservation of momentum & energy
+
+Add mass sliders and velocity vectors
+
+Concepts:
+momentum, coefficient of restitution, kinetic energy
+
+🎢 2. Projectile Motion
+Launch objects at an angle with adjustable velocity
+
+Show trajectory, max height, time of flight
+
+Add-ons:
+Wind resistance, different gravity per planet
+
+🪢 3. Pendulum & Double Pendulum
+Single pendulum: show periodic motion
+
+Double pendulum: chaotic motion (great for visuals!)
+
+Concepts:
+harmonic motion, chaos, torque
+
+📦 4. Spring-Mass System
+Block on a spring oscillating horizontally or vertically
+
+Adjustable stiffness, damping, mass
+
+Concepts:
+Hooke's Law, damping, resonance
+
+🌊 5. Wave Simulation
+1D transverse waves: string oscillation
+
+Interference patterns or standing waves
+
+Advanced: Use Fourier components
+
+🧲 6. Electric Fields & Charges
+Visualize field lines from positive/negative charges
+
+Show forces on test charges in real time
+
+🔲 7. Rigid Body Physics
+Stack or tumble 2D shapes (requires collision detection)
+
+Simulate torque, rotation, friction
+
+🔁 8. Circular Motion
+Object rotating around a center
+
+Show centripetal force, angular velocity
+
+🛰️ 9. Orbital Mechanics
+Simulate satellites around planets
+
+Show stable orbits vs escape trajectory
+
+🧱 10. Gravity with Multiple Bodies (N-body simulation)
+Add 2+ planets or moons, simulate gravitational pull between all
+
+Great to show orbital instability and complexity

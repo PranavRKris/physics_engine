@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gravity Simulator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <link rel="stylesheet" href="/static/gravity/gravity.css">
+</head>
+<body>
+    <div>
+        <div class="navbar">
+            <a href="/" class="back-link">⬅ Back</a>
+            <h1>Gravity Simulation</h1>
+        </div>
+        <div class="controls">
+            <label>Mass:</label>
+            <input type="range" id="mass-slider" min="1" max="10" value="1">
+            <button onclick="changePlanet('earth')">Earth</button>
+            <button onclick="changePlanet('mars')">Mars</button>
+            <button onclick="changePlanet('jupiter')">Jupiter</button>
+        </div>
+    </div>
+    <div id="canvas-holder" class="canvas-holder"></div>
+    <script src="/static/gravity/gravity.js"></script>
+
+    <section class="physics-section">
+        <h2>🌌 Physics Behind the Gravity Simulation</h2>
+        <p>This simulation models <strong>Newtonian gravity</strong> between a planet and a spacecraft. Let’s break down the underlying physics and relate it directly to the code used in the simulator.</p>
+
+        <h3>1. Gravitational Force</h3>
+        <p>The gravitational force between two objects is:</p>
+        <pre><code>F = G * (m1 * m2) / r²</code></pre>
+        <p><strong>Code:</strong></p>
+        <pre><code>let force = (5 * this.mass * planetMass) / distSq;</code></pre>
+
+        <h3>2. Force Direction</h3>
+        <pre><code>let angle = atan2(dy, dx);</code></pre>
+        <p>This gives the angle between spacecraft and planet, used to apply force directionally.</p>
+
+        <h3>3. Acceleration Components</h3>
+        <p>Using Newton's Second Law:</p>
+        <pre><code>
+        let ax = (force * cos(angle)) / this.mass;
+        let ay = (force * sin(angle)) / this.mass;
+        </code></pre>
+
+        <h3>4. Motion Update (Euler Integration)</h3>
+        <p>Velocity and position update per frame:</p>
+        <pre><code>
+        this.vx += ax;
+        this.vy += ay;
+        this.x += this.vx;
+        this.y += this.vy;
+        </code></pre>
+
+        <h3>5. Collision Detection</h3>
+        <p>Stops the spacecraft if it hits the planet:</p>
+        <pre><code>return dist(this.x, this.y, p.x, p.y) &lt; 50;</code></pre>
+
+        <h3>6. Launch Velocity (User Interaction)</h3>
+        <p>Initial velocity comes from dragging:</p>
+        <pre><code>let velocity = p5.Vector.sub(dragEnd, dragStart).div(100);</code></pre>
+
+        <h3>Planet Gravity Comparison</h3>
+        <table>
+            <thead><tr><th>Planet</th><th>Gravity</th><th>Mass</th></tr></thead>
+            <tbody>
+            <tr><td>Earth</td><td>1.00</td><td>100</td></tr>
+            <tr><td>Mars</td><td>0.38</td><td>10.7</td></tr>
+            <tr><td>Jupiter</td><td>2.53</td><td>500</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Ship Mass Slider</h3>
+        <p>Mass affects both gravity and inertia:</p>
+        <pre><code>
+        let sliderElem = document.getElementById("mass-slider");
+        if (sliderElem) shipMass = sliderElem.value;
+        </code></pre>
+
+        <h3>🧠 Summary</h3>
+        <ul>
+            <li>Newton’s Law of Gravity</li>
+            <li>Euler motion integration</li>
+            <li>Drag-and-release launch mechanic</li>
+            <li>Mass and planet-based gravity changes</li>
+        </ul>
+    </section>
+
+</body>
+</html>
