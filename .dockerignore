@@ -2,5 +2,9 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*.db
 .env
+.git
+env/
 venv/
+*.log
