@@ -13,13 +13,21 @@
         </div>
         <div class="controls">
             <label>Mass:</label>
-            <input type="range" id="mass-slider" min="1" max="10" value="1">
+            <input type="range" id="mass-slider" min="10" max="50" value="10">
             <button onclick="changePlanet('earth')">Earth</button>
             <button onclick="changePlanet('mars')">Mars</button>
             <button onclick="changePlanet('jupiter')">Jupiter</button>
         </div>
     </div>
-    <div id="canvas-holder" class="canvas-holder"></div>
+    <div class="canvas-container">
+        <div class="canvas-info">
+            <p>Click on the canvas and click again </p>
+            <p>to launch the spacecraft.</p>
+            <p>Use the slider to select spacecraft mass.</p>
+            <p>Select the planet to change its mass.</p>
+        </div>
+        <div id="canvas-holder" class="canvas-holder"></div>
+    </div>
     <script src="/static/gravity/gravity.js"></script>
 
     <section class="physics-section">

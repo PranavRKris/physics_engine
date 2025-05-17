@@ -4,7 +4,7 @@ let planet;
 let planetImg;
 let planetMass = 100;
 let gravityFactor = 1;
-let shipMass = 1;
+let shipMass = 10;
 let selectedPlanet = "earth";
 let dragStart = null;
 let isDragging = false;
@@ -32,7 +32,7 @@ function draw() {
   // Read slider value from HTML element
   let sliderElem = document.getElementById("mass-slider");
   if (sliderElem) shipMass = sliderElem.value;
-
+  console.log("Ship Mass: " + shipMass);
   image(planetImg, planet.x - 50, planet.y - 50, 100, 100);
 
   for (let obj of spacecraft) {
