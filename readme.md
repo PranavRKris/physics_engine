@@ -1,5 +1,7 @@
 # Physics Engine Simulators
 
+- [The deployed application is available here](https://physics-engine-rivn.onrender.com/)
+
 A collection of interactive physics simulations built with Flask and p5.js, visualizing core mechanics such as gravity, collisions, and projectile motion. Each simulator includes an educational section explaining the underlying physics and code.
 
 ## 🚀 Features
